@@ -2,20 +2,38 @@ require 'spec_helper'
 
 module Codebreaker
   RSpec.describe Game do
+    before (:each) { @game = Game.new }
     context '#start' do
-      let(:game) { Game.new }
 
       before do
-        game.start
+        @game.start
       end
       it 'saves secret code' do
-        expect(game.instance_variable_get(:@secret_code)).not_to be_empty
+        expect(@game.instance_variable_get(:@secret_code)).not_to be_empty
       end
       it 'saves 4 numbers secret code' do
-        expect(game.instance_variable_get(:@secret_code).size).to eq(4)
+        expect(@game.instance_variable_get(:@secret_code).size).to eq(4)
       end
       it 'saves secret code with numbers from 1 to 6' do
-        expect(game.instance_variable_get(:@secret_code)).to match(/^[1-6]{4}$/)
+        expect(@game.instance_variable_get(:@secret_code)).to match(/^[1-6]{4}$/)
+      end
+    end
+
+    context '#attempt' do
+
+      before do
+        @game.attempt
+      end
+      it 'puts cb code' do
+        allow(@game.instance_variable_get(:@cb_code)).to receive(:gets).and_return(String)
+        @game.attempt
+      end
+    end
+
+    context '#checker' do
+
+      it 'match secrete code with cb code and return result' do
+      expect
       end
     end
   end
