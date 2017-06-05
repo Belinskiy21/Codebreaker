@@ -1,4 +1,3 @@
-require 'pry'
 module Codebreaker
   class Game
     attr_accessor :secret_code, :cb_code, :attempt_counter, :hint_counter, :result
@@ -31,10 +30,10 @@ module Codebreaker
       puts @result
       @result = ''
       attempt
-      respond
+      #respond
     end
 
-    private
+    #private
 
     def win
       puts 'You win! Do you want continue? Y/N'
@@ -66,16 +65,16 @@ module Codebreaker
     end
 
     def answer
-      answer = gets.chomp
-      if answer == 'Y'
-        @attempt_counter, @hint_counter = 1, 0
-        start
-        attempt
-      else
-        puts 'Bye!'
-        sleep 3
-        exit
-      end
+      #answer = gets.chomp
+      #if answer == 'Y'
+       # @attempt_counter, @hint_counter = 1, 0
+       # start
+        #attempt
+      #else
+        #puts 'Bye!'
+        #sleep 3
+        #exit
+      #end
     end
   end
 end

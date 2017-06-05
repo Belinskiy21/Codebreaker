@@ -1,8 +1,8 @@
-require_relative 'codebreaker/game.rb'
+#require_relative 'codebreaker/game.rb'
 
-module Codebreaker
-  game = Game.new
-  game.start
-  game.attempt
-  game.respond
-end
+#module Codebreaker
+  #game = Game.new
+  #game.start
+  #game.attempt
+  #game.respond
+#end
