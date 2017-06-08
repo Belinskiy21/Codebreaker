@@ -21,43 +21,40 @@ module Codebreaker
     end
 
     context '#attempt' do
-
-      before do
-        @game.attempt
-      end
       it 'puts cb code' do
         allow(@game.instance_variable_get(:@cb_code)).to receive(:gets).and_return(String)
         @game.attempt
       end
+      it 'raise error if cb code size not 4' do
+
+      end
+
       it "call method #hint if put 'hint'" do
-        allow(@cb_code == 'hint')
+        @cb_code == 'hint'
         expect(@game).to receive(:hint)
-        @game.hint
+        @game.send(:hint)
       end
       it 'make attempt counter increment' do
-        allow( @attempt_counter = 1)
-        allow(@cb_code == '1234')
-        expect{ @game.attempt }.to change{ @game.attempt_counter }.by(+1)
+        $attempt_counter = 1
+        @cb_code == '1234'
+        expect{ @game.attempt }.to change{ $attempt_counter }.by(+1)
       end
     end
 
     context '#respond' do
-      before do
-        @game.respond
-      end
       it 'check result with method #checker' do
         expect(@game).to receive(:checker).and_return(:@result)
-        @game.checker
+        @game.send(:checker)
       end
       it 'call method #win when result is ++++' do
-        allow(@result == '++++')
+        @result == '++++'
         expect(@game).to receive(:win)
-        @game.win
+        @game.send(:win)
       end
       it 'call method #loose when attempt counter > 3' do
-        allow(@attempt_counter == 4)
+        $attempt_counter == 4
         expect(@game).to receive(:loose)
-        @game.loose
+        @game.send(:loose)
       end
       it 'puts result' do
         expect(@game).to receive(:puts).with(:@result)
@@ -66,33 +63,85 @@ module Codebreaker
       it 'make result empty string' do
         expect(@game.instance_variable_get(:@result)).to eq('')
       end
-      it 'call method #attempt' do
-        expect(@game).to receive(:attempt)
-        @game.attempt
-      end
     end
 
     context '#win' do
-      before do
-        @game.win
+      it 'puts result' do
+        expect(@game).to receive(:puts).with(:@result)
+        @game.send(:puts, :@result)
       end
       it 'should put the message WIN and call the method #answer' do
         expect(@game).to receive(:puts).with('You win! Do you want continue? Y/N')
         @game.send(:puts, 'You win! Do you want continue? Y/N')
         expect(@game).to receive(:answer)
-        @game.answer
+        @game.send(:answer)
       end
     end
 
     context '#loose' do
-      before do
-        @game.loose
+      it 'puts result' do
+        expect(@game).to receive(:puts).with(:@result)
+        @game.send(:puts, :@result)
       end
       it 'should put the message LOOSE and call the method #answer' do
         expect(@game).to receive(:puts).with('You loose! Do you want continue? Y/N')
         @game.send(:puts, 'You loose! Do you want continue? Y/N')
         expect(@game).to receive(:answer)
-        @game.answer
+        @game.send(:answer)
+      end
+    end
+
+    context '#hint' do
+      before do
+        @game.instance_variable_set(:@secret_code, '1234')
+        @game.send(:hint)
+      end
+      it 'should take random sample from secret code' do
+        expect(@game.instance_variable_get(:@secret_code)).to include(@game.hint_number)
+      end
+      it 'should change hint counter by 1' do
+        @hint_counter = 0
+        @game.send(:hint)
+        expect{ @game.send(:hint) }.to change{ @game.hint_counter }.by(+1)
+      end
+    end
+
+    context '#checker' do
+      before do
+        @game.instance_variable_set(:@secret_code, '1234')
+        @game.instance_variable_set(:@cb_code, '1222')
+        @game.send(:checker)
+      end
+      it 'should return result after comparing secret code with cb code' do
+        expect(@game.result).to eq('++')
+      end
+    end
+
+    context '#answer' do
+      it 'get the answer Y' do
+        ans = 'Y'
+        allow(ans).to receive(:gets).and_return('Y')
+        allow(@game).to receive(:start)
+        allow(@game).to receive(:attempt)
+        expect($attempt_counter).to eq(1)
+        expect(@game.hint_counter).to eq(0)
+        @game.send(:answer)
+        @game.start
+        @game.attempt
+      end
+      it 'get the answer N' do
+        ans = 'N'
+        allow(@game).to receive(:save)
+        allow(@game).to receive(:sleep).with(3)
+        allow(@game).to receive(:exit)
+        expect(@game).to receive(:puts).with('Bye!')
+        @game.send(:puts, 'Bye!')
+      end
+      it 'put warning when answer not N/Y' do
+        ans = 'any_other_input'
+        expect(@game).to receive(:puts).with('Wrong input! Y or N?')
+        #expect(@game).to receive(:answer).and_call_original
+        @game.send(:puts, 'Wrong input! Y or N?')
       end
     end
   end
