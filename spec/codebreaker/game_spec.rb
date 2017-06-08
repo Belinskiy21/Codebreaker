@@ -26,7 +26,9 @@ module Codebreaker
         @game.attempt
       end
       it 'raise error if cb code size not 4' do
-
+        @game.instance_variable_set(:@cb_code, '12')
+        @game.attempt
+        expect{ @cb_code .gets }.to raise_error(Exception)
       end
 
       it "call method #hint if put 'hint'" do
