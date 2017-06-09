@@ -1,6 +1,6 @@
 require 'codebreaker/version'
 require 'codebreaker/game'
-require 'main'
+require './main'
 require 'codebreaker/infosaver'
 
 module Codebreaker

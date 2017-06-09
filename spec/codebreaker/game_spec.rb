@@ -142,7 +142,6 @@ module Codebreaker
       it 'put warning when answer not N/Y' do
         ans = 'any_other_input'
         expect(@game).to receive(:puts).with('Wrong input! Y or N?')
-        #expect(@game).to receive(:answer).and_call_original
         @game.send(:puts, 'Wrong input! Y or N?')
       end
     end

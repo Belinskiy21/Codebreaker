@@ -1,5 +1,5 @@
-=begin require_relative 'codebreaker/game.rb'
-require_relative 'codebreaker/infosaver.rb'
+require_relative 'lib/codebreaker/game.rb'
+require_relative 'lib/codebreaker/infosaver.rb'
 
 module Codebreaker
   include InfoSaver
@@ -10,4 +10,4 @@ module Codebreaker
     game.respond
   end
 end
-=end
+

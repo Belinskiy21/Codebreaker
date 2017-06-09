@@ -8,7 +8,8 @@ module Codebreaker
       context '#user_name' do
         it 'should ask the name' do
           expect(@game).to receive(:puts).with('What is your name?')
-          allow(@game.instance_variable_get(:@name)).to receive(:gets).and_return(String)
+          allow(@game.instance_variable_get(:@name)).to receive(:gets)
+          .and_return(String)
           @game.user_name
         end
       end
@@ -25,12 +26,12 @@ module Codebreaker
 
       context '#save' do
         it 'should save information to file' do
-          allow(@game).to receive(:exists?).and_return(false)
+          allow(@game).to receive(:exist?).and_return(false)
           @game.save
-          expect(File.exists?('lib/codebreaker/game_info/game_info.txt')).to eq(true)
+          expect(File.exist?('lib/codebreaker/game_info/game_info.txt'))
+          .to eq(true)
           expect(@game).to receive(:add_info)
           @game.add_info
-
         end
       end
     end

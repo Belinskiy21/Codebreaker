@@ -1,26 +1,27 @@
 # coding: utf-8
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "codebreaker/version"
+require 'codebreaker/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "codebreaker"
+  spec.name          = 'codebreaker'
   spec.version       = Codebreaker::VERSION
-  spec.authors       = ["Oleg"]
-  spec.email         = ["belinskiy21@gmail.com"]
+  spec.authors       = ['Oleg']
+  spec.email         = ['belinskiy21@gmail.com']
 
-  spec.summary       = %q{This is the game codebreaker.}
-  spec.description   = %q{Game for guess the number.}
+  spec.summary       = %q{ 'This is the game codebreaker.' }
+  spec.description   = %q{ 'Game for guess the number.' }
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
   else
-    raise "RubyGems 2.0 or newer is required to protect against " \
-      "public gem pushes."
+    raise 'RubyGems 2.0 or newer is required to protect against ' \
+      'public gem pushes.'
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|

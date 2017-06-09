@@ -1,4 +1,4 @@
-#require_relative 'game.rb'
+require_relative 'game.rb'
 module Codebreaker
   module InfoSaver
      attr_accessor :name, :lists
@@ -23,7 +23,7 @@ module Codebreaker
     def save
       add_info
       serialized_datas = Marshal.dump(@datas)
-      File.open('codebreaker/game_info/game_info.txt', 'a') {|f| f.write(serialized_datas)}
+      File.open('lib/codebreaker/game_info/game_info.txt', 'a') {|f| f.write(serialized_datas)}
       puts "#{@name}, your achivements were saved!"
     end
   end

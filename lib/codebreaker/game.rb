@@ -1,8 +1,8 @@
-#require_relative 'infosaver.rb'
+require_relative 'infosaver.rb'
 module Codebreaker
   class Game
-    #include InfoSaver
-    attr_accessor :secret_code, :cb_code, :at, :total_loose, :total_win, :hint_counter, :result, :hint_number
+    include InfoSaver
+    attr_accessor :secret_code, :cb_code, :attempt_counter, :total_loose, :total_win, :hint_counter, :result, :hint_number
 
     def initialize
       @secret_code = ''
@@ -60,35 +60,35 @@ module Codebreaker
     def hint
      puts @hint_number = @secret_code.split('').sample
      @hint_counter += 1
-    end
+   end
 
-    def checker
-      secret_code = @secret_code.split(''); cb_code = @cb_code.split('');
-      secret_code.length.times do |i|
-        if secret_code[i] == cb_code[i]
-          @result += '+'
-          secret_code[i], cb_code[i] = nil, nil
-        end
+   def checker
+    secret_code = @secret_code.split(''); cb_code = @cb_code.split('');
+    secret_code.length.times do |i|
+      if secret_code[i] == cb_code[i]
+        @result += '+'
+        secret_code[i], cb_code[i] = nil, nil
       end
-      secret_code.compact!; cb_code.compact!;
-      cb_code.each { |el| @result += '-' if secret_code.include?(el) }
-      @result
     end
+    secret_code.compact!; cb_code.compact!;
+    cb_code.each { |el| @result += '-' if secret_code.include?(el) }
+    @result
+  end
 
-    def answer
-        ans = gets.chomp
-      if ans == 'Y'
-        $attempt_counter, @hint_counter = 1, 0
-       start
-       attempt
-      elsif ans == 'N'
-        save
-        puts 'Bye!'
-        sleep 3
-        exit
-      else
-        puts ('Wrong input! Y or N?')
-        #answer
+  def answer
+    ans = gets.chomp
+    if ans == 'Y'
+      $attempt_counter, @hint_counter = 1, 0
+      start
+      attempt
+    elsif ans == 'N'
+      save
+      puts 'Bye!'
+      sleep 3
+      exit
+    else
+      puts 'Wrong input! Y or N?'
+      answer
       end
     end
   end
