@@ -25,12 +25,6 @@ module Codebreaker
         allow(@game.instance_variable_get(:@cb_code)).to receive(:gets).and_return(String)
         @game.attempt
       end
-      it 'raise error if cb code size not 4' do
-        @game.instance_variable_set(:@cb_code, '12')
-        @game.attempt
-        expect{ @cb_code .gets }.to raise_error(Exception)
-      end
-
       it "call method #hint if put 'hint'" do
         @cb_code == 'hint'
         expect(@game).to receive(:hint)
@@ -84,8 +78,8 @@ module Codebreaker
 
     context '#checker' do
       before do
-        @game.instance_variable_set(:@secret_code, '1234')
-        @game.instance_variable_set(:@cb_code, '1222')
+        @game.instance_variable_set(:@secret_code, '3211')
+        @game.instance_variable_set(:@cb_code, '3222')
         @game.send(:checker)
       end
       it 'should return result after comparing secret code with cb code' do

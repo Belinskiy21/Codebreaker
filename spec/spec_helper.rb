@@ -1,5 +1,8 @@
 require "bundler/setup"
-require "codebreaker"
+require "./lib/codebreaker/game"
+require "./lib/codebreaker/infosaver"
+require "./lib/codebreaker/ui"
+
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
