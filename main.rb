@@ -1,13 +1,13 @@
 require_relative 'lib/codebreaker/game.rb'
 require_relative 'lib/codebreaker/infosaver.rb'
+require_relative 'lib/codebreaker/ui.rb'
 
 module Codebreaker
   include InfoSaver
+  include UI
   game = Game.new
   game.start
-  while $attempt_counter < 6 do
-    game.attempt
-    game.respond
-  end
+  game.menu
+  game.attempt
 end
 

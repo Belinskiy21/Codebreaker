@@ -67,32 +67,6 @@ module Codebreaker
       end
     end
 
-    context '#win' do
-      it 'puts result' do
-        expect(@game).to receive(:puts).with(:@result)
-        @game.send(:puts, :@result)
-      end
-      it 'should put the message WIN and call the method #answer' do
-        expect(@game).to receive(:puts).with('You win! Do you want continue? Y/N')
-        @game.send(:puts, 'You win! Do you want continue? Y/N')
-        expect(@game).to receive(:answer)
-        @game.send(:answer)
-      end
-    end
-
-    context '#loose' do
-      it 'puts result' do
-        expect(@game).to receive(:puts).with(:@result)
-        @game.send(:puts, :@result)
-      end
-      it 'should put the message LOOSE and call the method #answer' do
-        expect(@game).to receive(:puts).with('You loose! Do you want continue? Y/N')
-        @game.send(:puts, 'You loose! Do you want continue? Y/N')
-        expect(@game).to receive(:answer)
-        @game.send(:answer)
-      end
-    end
-
     context '#hint' do
       before do
         @game.instance_variable_set(:@secret_code, '1234')
@@ -116,33 +90,6 @@ module Codebreaker
       end
       it 'should return result after comparing secret code with cb code' do
         expect(@game.result).to eq('++')
-      end
-    end
-
-    context '#answer' do
-      it 'get the answer Y' do
-        ans = 'Y'
-        allow(ans).to receive(:gets).and_return('Y')
-        allow(@game).to receive(:start)
-        allow(@game).to receive(:attempt)
-        expect($attempt_counter).to eq(1)
-        expect(@game.hint_counter).to eq(0)
-        @game.send(:answer)
-        @game.start
-        @game.attempt
-      end
-      it 'get the answer N' do
-        ans = 'N'
-        allow(@game).to receive(:save)
-        allow(@game).to receive(:sleep).with(3)
-        allow(@game).to receive(:exit)
-        expect(@game).to receive(:puts).with('Bye!')
-        @game.send(:puts, 'Bye!')
-      end
-      it 'put warning when answer not N/Y' do
-        ans = 'any_other_input'
-        expect(@game).to receive(:puts).with('Wrong input! Y or N?')
-        @game.send(:puts, 'Wrong input! Y or N?')
       end
     end
   end
