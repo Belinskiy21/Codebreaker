@@ -10,7 +10,7 @@ module Codebreaker
       @cb_code = ''
       @total_loose = 0
       @total_win = 0
-      $attempt_counter = 1
+      @attempt_counter = 1
       @hint_counter = 0
       @result = ''
       @name = ''
@@ -24,14 +24,14 @@ module Codebreaker
     def attempt
       @cb_code = gets.chomp
       hint if @cb_code == 'hint'
-      $attempt_counter += 1 unless @cb_code == 'hint'
+      @attempt_counter += 1 unless @cb_code == 'hint'
       respond
     end
 
     def respond
       puts checker
       win if @result == '++++'
-      loose if $attempt_counter > 5
+      loose if @attempt_counter > 5
       @result = ''
       menu
       attempt

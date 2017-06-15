@@ -31,9 +31,9 @@ module Codebreaker
         @game.send(:hint)
       end
       it 'make attempt counter increment' do
-        $attempt_counter = 1
+        @attempt_counter = 1
         @cb_code == '1234'
-        expect{ @game.attempt }.to change{ $attempt_counter }.by(+1)
+        expect{ @game.attempt }.to change{ @attempt_counter }.by(+1)
       end
     end
 
@@ -48,7 +48,7 @@ module Codebreaker
         @game.send(:win)
       end
       it 'call method #loose when attempt counter > 3' do
-        $attempt_counter == 4
+        @attempt_counter == 4
         expect(@game).to receive(:loose)
         @game.send(:loose)
       end

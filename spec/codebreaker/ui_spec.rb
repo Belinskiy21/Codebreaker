@@ -6,10 +6,10 @@ module Codebreaker
 
     context '#menu' do
       it 'puts messages for user' do
-        $attempt_counter != 1
+        @attempt_counter != 1
         @hint_counter != 0
         expect(@game).not_to receive(:puts).with('I made a secret code with 4 numbers! You have 5 attempt to guess!')
-        expect(@game).to receive(:puts).with("Try guess! Attempt N:#{$attempt_counter}")
+        expect(@game).to receive(:puts).with("Try guess! Attempt N:#{@attempt_counter}")
         expect(@game).not_to receive(:puts).with("For hint type: 'hint'!")
       end
     end
@@ -46,7 +46,7 @@ module Codebreaker
         allow(player_say).to receive(:gets).and_return('Y')
         allow(@game).to receive(:start)
         allow(@game).to receive(:attempt)
-        expect($attempt_counter).to eq(1)
+        expect(@attempt_counter).to eq(1)
         expect(@game.hint_counter).to eq(0)
         expect(@game.result).to eq('')
         @game.answer
@@ -62,7 +62,7 @@ module Codebreaker
         @game.send(:puts, 'Bye!')
       end
       it 'put warning when answer not N/Y' do
-        player_answer = 'any_other_input'
+        player_say = 'any_other_input'
         expect(@game).to receive(:puts).with('Wrong input! Y or N?')
         @game.send(:puts, 'Wrong input! Y or N?')
       end

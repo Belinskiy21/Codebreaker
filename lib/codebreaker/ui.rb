@@ -2,8 +2,8 @@ module Codebreaker
   module UI
 
     def menu
-      puts 'I made a secret code with 4 numbers! You have 5 attempt to guess!' if $attempt_counter == 1
-      puts "Try guess! Attempt N:#{$attempt_counter}"
+      puts 'I made a secret code with 4 numbers! You have 5 attempt to guess!' if @attempt_counter == 1
+      puts "Try guess! Attempt N:#{@attempt_counter}"
       puts "For hint type: 'hint'!" if @hint_counter ==0
     end
 
@@ -24,7 +24,7 @@ module Codebreaker
     def answer
       player_say = gets.chomp
       if player_say == 'Y'
-        $attempt_counter, @hint_counter, @result = 1, 0, ''
+        @attempt_counter, @hint_counter, @result = 1, 0, ''
         start
         menu
         attempt
