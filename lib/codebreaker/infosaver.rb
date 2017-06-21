@@ -1,7 +1,8 @@
-require_relative 'game.rb'
-require_relative 'ui.rb'
+
 module Codebreaker
   module InfoSaver
+    attr_accessor :name, :datas
+
     def user_name
       puts 'What is your name?'
       @name = gets.chomp
@@ -10,7 +11,8 @@ module Codebreaker
     def add_info
       user_name
       @datas << "Player : #{@name}."
-      @datas << "Win : #{@total_wins}."
+      @datas << "Games were played: #{@total_game}."
+      @datas << "Win : #{@total_win}."
       @datas << "Loose : #{@total_loose}."
     end
 

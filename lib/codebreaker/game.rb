@@ -1,64 +1,56 @@
-require_relative 'infosaver.rb'
+require 'pry'
 module Codebreaker
   class Game
-    include InfoSaver
-    include UI
-    attr_accessor :secret_code, :cb_code, :attempt_counter, :hint_counter, :result, :hint_number, :total_loose, :total_win, :name, :datas
+    attr_accessor :secret_code, :cb_code, :hint_counter,
+     :result, :hint_number, :attempt_counter
 
     def initialize
       @secret_code = ''
       @cb_code = ''
-      @total_loose = 0
-      @total_win = 0
-      @attempt_counter = 1
       @hint_counter = 0
       @result = ''
-      @name = ''
-      @datas = []
+      @attempt_counter = 1
     end
 
     def start
-      @secret_code = 4.times.map { rand(1..6) }.join
+      @secret_code = generator
+    end
+
+    def generator
+      4.times.map { rand(1..6) }.join
     end
 
     def attempt
       @cb_code = gets.chomp
       hint if @cb_code == 'hint'
       @attempt_counter += 1 unless @cb_code == 'hint'
-      respond
     end
 
     def respond
-      puts checker
-      win if @result == '++++'
-      loose if @attempt_counter > 5
-      @result = ''
-      menu
-      attempt
+      @result.clear
+      checker(@secret_code.split(''), @cb_code.split(''))
+    end
+
+    def hint
+     @hint_counter += 1
+     @hint_number = @secret_code[rand(0..3)] if @hint_counter < 2
     end
 
     private
 
-    def hint
-     @hint_counter += 1
-     if @hint_counter < 2
-      puts @hint_number = @secret_code.split('').sample
-     else
-      puts 'You have no hints no more!'
-     end
+    def checker(secret_code, cb_code)
+      exclude_match = cb_code.zip(secret_code)
+      .select { |guess, secret| guess != secret}.transpose
+      @result = '+' * (4 - exclude_match[0].size)
+      include_matches(exclude_match[0], exclude_match[1])
     end
 
-    def checker
-      secret_code = @secret_code.split(''); cb_code = @cb_code.split('');
-      secret_code.length.times do |i|
-        if secret_code[i] == cb_code[i]
-          @result += '+'
-          secret_code[i], cb_code[i] = nil, nil
-        end
+    def include_matches(secret_code, cb_code)
+      secret_code.each do |val|
+        next if !cb_code.include?(val)
+        cb_code.delete_at(cb_code.index(val))
+        @result += '-'
       end
-      secret_code.compact!; cb_code.compact!;
-      cb_code.each { |el| @result += '-' if secret_code.include?(el) }
-      @result
     end
   end
 end
