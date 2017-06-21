@@ -3,7 +3,7 @@ require 'pry'
 module Codebreaker
   class UI
     include InfoSaver
-    attr_accessor :game, :total_loose, :total_win
+    attr_accessor :game, :total_game, :total_loose, :total_win, :name, :datas
 
     def initialize
       @game = Game.new

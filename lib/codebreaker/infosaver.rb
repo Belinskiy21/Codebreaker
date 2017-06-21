@@ -1,7 +1,6 @@
 
 module Codebreaker
   module InfoSaver
-    attr_accessor :name, :datas
 
     def user_name
       puts 'What is your name?'
