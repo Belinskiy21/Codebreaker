@@ -7,7 +7,7 @@ module Codebreaker
     context '#start' do
 
       before do
-        @game.start
+        @game.generator
       end
       it 'saves secret code' do
         expect(@game.instance_variable_get(:@secret_code)).not_to be_empty
@@ -21,14 +21,14 @@ module Codebreaker
     end
 
     context '#attempt' do
-      it 'puts cb code' do
+      it 'takes a string with cb code' do
         allow(@game.instance_variable_get(:@cb_code)).to receive(:gets).and_return(String)
         @game.attempt
       end
       it "call method #hint if put 'hint'" do
         @cb_code == 'hint'
         expect(@game).to receive(:hint)
-        @game.send(:hint)
+        @game.hint
       end
       it 'make attempt counter increment' do
         @attempt_counter = 1
@@ -38,41 +38,26 @@ module Codebreaker
     end
 
     context '#respond' do
+      it 'clear result' do
+        expect(@game.instance_variable_get(:@result)).to eq('')
       it 'check result with method #checker' do
         expect(@game).to receive(:checker).and_return(:@result)
         @game.send(:checker)
-      end
-      it 'call method #win when result is ++++' do
-        @result == '++++'
-        expect(@game).to receive(:win)
-        @game.send(:win)
-      end
-      it 'call method #loose when attempt counter > 3' do
-        @attempt_counter == 4
-        expect(@game).to receive(:loose)
-        @game.send(:loose)
-      end
-      it 'puts result' do
-        expect(@game).to receive(:puts).with(:@result)
-        @game.send(:puts, :@result)
-      end
-      it 'make result empty string' do
-        expect(@game.instance_variable_get(:@result)).to eq('')
       end
     end
 
     context '#hint' do
       before do
         @game.instance_variable_set(:@secret_code, '1234')
-        @game.send(:hint)
+        @game.hint
       end
       it 'should take random sample from secret code' do
         expect(@game.instance_variable_get(:@secret_code)).to include(@game.hint_number)
       end
       it 'should change hint counter by 1' do
         @hint_counter = 0
-        @game.send(:hint)
-        expect{ @game.send(:hint) }.to change{ @game.hint_counter }.by(+1)
+        @game.hint
+        expect{ @game.hint }.to change{ @game.hint_counter }.by(+1)
       end
     end
 
