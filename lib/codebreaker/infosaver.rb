@@ -1,4 +1,6 @@
 
+require 'yaml'
+
 module Codebreaker
   module InfoSaver
 
@@ -17,8 +19,7 @@ module Codebreaker
 
     def save
       add_info
-      serialized_datas = Marshal.dump(@datas)
-      File.open('lib/codebreaker/game_info/game_info.txt', 'a') {|f| f.write(serialized_datas)}
+      File.open('lib/codebreaker/game_info/game_info.yml', 'a') {|f| f.write(@datas.to_yaml)}
       puts "#{@name}, your achivements were saved!"
     end
   end
